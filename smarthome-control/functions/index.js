@@ -23,7 +23,9 @@ const admin = require('firebase-admin');
 // Initialize Firebase
 admin.initializeApp();
 const firebaseRef = admin.database().ref('/');
-const { info } = require("firebase-functions/lib/logger");
+
+// const { info } = require("firebase-functions/lib/logger");
+const fireDebug = require("firebase-functions/lib/logger");
 
 const mqttPublisher = require('./mqtt/mqttPublisher');
 
@@ -293,9 +295,9 @@ app.onExecute(async (body) => {
         executePromises.push(
           updateDevice(execution, device.id)
             .then((data) => {
-              info('Id de dispositivo:', device.id);
-              info('Datos recibidos de google home: ')
-              info(data); // para visualizar los datos en la consola de firebase
+              fireDebug.info('Id de dispositivo:', device.id);
+              fireDebug.info('Datos recibidos de google home:', data)
+              // fireDebug.info(data); // para visualizar los datos en la consola de firebase
 
               if (device.id == 6) {
                 if (data.on == true) {
